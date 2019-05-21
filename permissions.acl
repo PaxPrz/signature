@@ -11,7 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
+/*
 rule NooneCanURDOthersSignature{
 	description: "No one can see others signature"
   	participant(p): "com.pax.signature.Signee"
@@ -20,6 +21,7 @@ rule NooneCanURDOthersSignature{
   	condition: (p.getIdentifier()!=r.owner.getIdentifier())
   	action: DENY
 }
+*/
 
 rule SigneeCanCreateSignature{
 	description: "Signee can CREATE own signature"
@@ -61,6 +63,30 @@ rule AllowedPeopleCanReadSignature{
   	operation: READ
     resource(r): "com.pax.signature.Signature"
   	condition: (checkAllowedOrNot(p, r))
+  	action: ALLOW
+}
+
+rule AllowUploadSignatureTransaction{
+	description: "Signee can READ CREATE upload sign"
+  	participant: "com.pax.signature.Signee"
+  	operation: READ, CREATE
+  	resource: "com.pax.signature.UploadSignature"
+  	action: ALLOW
+}
+
+rule AllowAddToAllowedListTransaction{
+	description: "Signee can READ CREATE allowed list"
+  	participant: "com.pax.signature.Signee"
+  	operation: READ, CREATE
+  	resource: "com.pax.signature.AddToAllowedList"
+  	action: ALLOW
+}
+
+rule AllowSignatureValidationTransaction{
+	description: "Signee can READ CREATE Signature Validation"
+  	participant: "com.pax.signature.Signee"
+  	operation: READ, CREATE
+  	resource: "com.pax.signature.SignatureValidation"
   	action: ALLOW
 }
 
