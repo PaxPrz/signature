@@ -11,7 +11,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 /*
 rule NooneCanURDOthersSignature{
 	description: "No one can see others signature"
@@ -88,6 +87,15 @@ rule AllowSignatureValidationTransaction{
   	operation: READ, CREATE
   	resource: "com.pax.signature.SignatureValidation"
   	action: ALLOW
+}
+
+rule SigneeCanSeeTheirOwnHistoryOnly{
+	description: "Signee should be able to see the history of their own transaction only"
+  	participant(p): "com.pax.signature.Signee"
+  	operation: READ
+   	resource(r): "org.hyperledger.composer.system.HistorianRecord"
+  	condition: (r.participantInvoking.getIdentifier() != p.getIdentifier())
+  	action: DENY
 }
 
 rule NetworkAdminUser {

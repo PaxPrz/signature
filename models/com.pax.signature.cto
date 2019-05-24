@@ -30,6 +30,12 @@ asset Signature identified by sigId{
     --> Signee owner
 }
 
+transaction CreateUser{
+	o String emailId
+    o String name
+    o String password
+}
+
 transaction UploadSignature{
   	o String sigName
     o String filename
